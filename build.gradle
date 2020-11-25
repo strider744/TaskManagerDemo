@@ -1,0 +1,88 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        kotlin_version = '1.4.10'
+        navigation_version = '2.3.1'
+        hilt_version = '2.29.1-alpha'
+    }
+
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    // App dependencies
+    constraintlayout_version = "2.0.4"
+    glide_version = "4.11.0"
+    hilt_androidX_version = "1.0.0-alpha02"
+    paging_version = "3.0.0-alpha09"
+    vega_version = "1.0.6"
+    algolia_version = "2.3.1"
+    elastic_version = "2.0.7"
+    lifecycle_version = "2.2.0"
+    lifeCycle_extension_version = '2.1.1'
+    material_version = '1.3.0-alpha03'
+    room_version = "2.2.5"
+    rxpermissions_version = "0.12"
+    autodispose2_version = "2.0.0"
+    anko_version = "0.10.8"
+    work_version = "2.4.0"
+    retrofit_version = "2.9.0"
+    okhttp3_version = "4.9.0"
+    kotpref_version = "2.12.0"
+    coroutines_version = "1.3.9"
+    splitties_version = "3.0.0-alpha06"
+    activity_ktx_version = "1.1.0"
+    core_ktx_version = "1.3.2"
+    fragment_ktx_version = "1.2.5"
+    appcompat_version = "1.2.0"
+    rxjava_version = "3.0.4"
+    rxandroid_version = "3.0.0"
+    rxkotlin_version = "3.0.0"
+    rxbinding4_version = "4.0.0"
+    timber_version = "4.7.1"
+    google_location_version = "17.1.0"
+
+    // tests dependencies
+    espresso_version = "3.3.0"
+    test_junit_version = "1.1.2"
+    junit_version = "4.13"
+    robolectric_version = "4.3.1"
+    mockito_version = "3.3.3"
+    hamcrest_version = "1.3"
+    androidx_test_core_version = "1.3.0"
+    androidx_test_runner_version = "1.1.2"
+    androidx_test_rules_version = "1.3.0"
+    arch_testing_version = "2.1.0"
+}

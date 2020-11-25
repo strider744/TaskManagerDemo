@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Task Manager</string>
+
+    <string name="status_text" translatable="false">Status</string>
+    <string name="status_wip" translatable="false">WIP</string>
+    <string name="status_todo" translatable="false">TODO</string>
+    <string name="status_declined" translatable="false">DECLINED</string>
+    <string name="status_none" translatable="false">NONE</string>
+    <string name="status_review" translatable="false">REVIEW</string>
+    <string name="task_title_hint">Task title</string>
+    <string name="task_description_hint">Task description</string>
+</resources>
