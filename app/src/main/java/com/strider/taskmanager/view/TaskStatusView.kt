@@ -33,11 +33,25 @@ class TaskStatusView @JvmOverloads constructor(
 
     // устанавливаем статус
     fun setStatus(statusId: Int) {
+        Timber.e("qwe status $statusId")
+
         when (statusId) {
             Status.DECLINED.id -> setViewData(R.drawable.bg_status_declined, Status.DECLINED.status)
             Status.REVIEW.id -> setViewData(R.drawable.bg_status_review, Status.REVIEW.status)
-            Status.WIP.id -> setViewData(R.drawable.bg_status_wip, Status.REVIEW.status)
-            Status.TODO.id -> setViewData(R.drawable.bg_status_todo, Status.REVIEW.status)
+            Status.WIP.id -> setViewData(R.drawable.bg_status_wip, Status.WIP.status)
+            Status.TODO.id -> setViewData(R.drawable.bg_status_todo, Status.TODO.status)
+            else -> setViewData(R.drawable.bg_status_none, Status.NONE.status)
+        }
+    }
+
+    // устанавливаем статус
+    fun setStatus(status: String) {
+        Timber.e("qwe status $status")
+        when (status) {
+            Status.DECLINED.status -> setViewData(R.drawable.bg_status_declined, Status.DECLINED.status)
+            Status.REVIEW.status -> setViewData(R.drawable.bg_status_review, Status.REVIEW.status)
+            Status.WIP.status -> setViewData(R.drawable.bg_status_wip, Status.WIP.status)
+            Status.TODO.status -> setViewData(R.drawable.bg_status_todo, Status.TODO.status)
             else -> setViewData(R.drawable.bg_status_none, Status.NONE.status)
         }
     }
@@ -47,8 +61,8 @@ class TaskStatusView @JvmOverloads constructor(
         when (status) {
             Status.DECLINED -> setViewData(R.drawable.bg_status_declined, Status.DECLINED.status)
             Status.REVIEW -> setViewData(R.drawable.bg_status_review, Status.REVIEW.status)
-            Status.WIP -> setViewData(R.drawable.bg_status_wip, Status.REVIEW.status)
-            Status.TODO  -> setViewData(R.drawable.bg_status_todo, Status.REVIEW.status)
+            Status.WIP -> setViewData(R.drawable.bg_status_wip, Status.WIP.status)
+            Status.TODO  -> setViewData(R.drawable.bg_status_todo, Status.TODO.status)
             else -> setViewData(R.drawable.bg_status_none, Status.NONE.status)
         }
     }
