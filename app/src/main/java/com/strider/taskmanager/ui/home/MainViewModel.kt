@@ -45,4 +45,12 @@ class MainViewModel @ViewModelInject constructor(
             database.taskDao.insert(Task("Call Elon Musk", priority = Priority.LOW.id))
         }
     }
+
+    fun onTaskSelected(task: Task) {
+
+    }
+
+    fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
+        database.taskDao.update(task.copy(isCompleted = isChecked))
+    }
 }

@@ -1,4 +1,4 @@
-package com.strider.taskmanager.database
+package com.strider.taskmanager.database.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

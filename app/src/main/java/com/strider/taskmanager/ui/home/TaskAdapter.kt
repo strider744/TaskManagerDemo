@@ -9,7 +9,7 @@ import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.ItemTaskBinding
 import timber.log.Timber
 
-class TaskAdapter : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback())  {
+class TaskAdapter(private val listener: OnItemClickListener) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback())  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,12 +21,29 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback()
         holder.bind(currentItem)
     }
 
-    class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.apply {
+                root.setOnClickListener {
+                    val position = absoluteAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val task = getItem(position)
+                        listener.onItemClick(task)
+                    }
+                }
+                cbCompleted.setOnClickListener {
+                    val position = absoluteAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val task = getItem(position)
+                        listener.onCheckBoxClick(task, cbCompleted.isChecked)
+                    }
+                }
+            }
+        }
 
         fun bind(task: Task) {
             binding.apply {
-                Timber.e("qwe task.title ${task.name}")
-                Timber.e("qwe task.status ${task.status}")
                 cbCompleted.isChecked = task.isCompleted
                 tvTaskTitle.text = task.name
                 taskStatusView.setStatus(task.status)

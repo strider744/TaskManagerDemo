@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.strider.taskmanager.R
+import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.FragmentHomeBinding
 import com.strider.taskmanager.enums.SortOrder
 import com.strider.taskmanager.preferenses.ApplicationPrefs
@@ -27,7 +28,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val binding = FragmentHomeBinding.bind(view)
 
-        val taskAdapter = TaskAdapter()
+        val taskAdapter = TaskAdapter(getOnItemClickListener())
 
         binding.apply {
             rvTasks.apply {
@@ -45,6 +46,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         viewModel.setUpDatabase()
+    }
+
+    private fun getOnItemClickListener(): OnItemClickListener {
+        return object : OnItemClickListener{
+            override fun onItemClick(item: Task) {
+
+            }
+
+            override fun onCheckBoxClick(item: Task, isChecked: Boolean) {
+                viewModel.onTaskCheckedChanged(item, isChecked)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
