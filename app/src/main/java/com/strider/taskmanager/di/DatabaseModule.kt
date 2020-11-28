@@ -1,16 +1,12 @@
 package com.strider.taskmanager.di
 
-import android.app.Application
 import androidx.room.Room
 import com.strider.taskmanager.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import splitties.init.appCtx
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module

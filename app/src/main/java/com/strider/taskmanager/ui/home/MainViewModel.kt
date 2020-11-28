@@ -1,18 +1,24 @@
 package com.strider.taskmanager.ui.home
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.strider.taskmanager.database.AppDatabase
 import com.strider.taskmanager.database.entity.Task
+import com.strider.taskmanager.enums.SortOrder
 import com.strider.taskmanager.enums.Status
 import kotlinx.coroutines.launch
 
 class MainViewModel @ViewModelInject constructor(
     private val database: AppDatabase
 ) : ViewModel() {
-    val tasks = database.taskDao.getAll().asLiveData()
+
+    val searchQuery = MutableLiveData("")
+    val sortOrder = MutableLiveData(SortOrder.BY_DATE)
+    val hideCompleted = MutableLiveData(false)
+
+    val tasks = Transformations.switchMap(searchQuery) {
+        database.taskDao.getTasks(query = it)
+    }
 
     fun setUpDatabase() {
         viewModelScope.launch {

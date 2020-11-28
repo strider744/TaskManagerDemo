@@ -11,14 +11,15 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "task_table")
 @Parcelize
 data class Task(
-    val title: String,
+    val name: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+
     val isCompleted: Boolean = false,
     val description: String = "",
     val creatorName: String = "",
     val status: String = Status.WIP.status,
-    val priority: String = "",
+    val priority: Int = Priority.NONE.id,
     val changes: List<Change> = listOf(),
     val createdAt: Long = System.currentTimeMillis(),
     val lastChange: Long = System.currentTimeMillis()

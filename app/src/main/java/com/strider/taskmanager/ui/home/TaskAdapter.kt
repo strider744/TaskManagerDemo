@@ -25,10 +25,10 @@ class TaskAdapter : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback()
 
         fun bind(task: Task) {
             binding.apply {
-                Timber.e("qwe task.title ${task.title}")
+                Timber.e("qwe task.title ${task.name}")
                 Timber.e("qwe task.status ${task.status}")
                 cbCompleted.isChecked = task.isCompleted
-                tvTaskTitle.text = task.title
+                tvTaskTitle.text = task.name
                 taskStatusView.setStatus(task.status)
             }
         }

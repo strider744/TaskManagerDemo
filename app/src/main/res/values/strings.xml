@@ -2,6 +2,7 @@
     <string name="app_name">Task Manager</string>
 
     <string name="status_text" translatable="false">Status</string>
+    <string name="action_search_title" translatable="false">Search</string>
     <string name="status_wip" translatable="false">WIP</string>
     <string name="status_todo" translatable="false">TODO</string>
     <string name="status_declined" translatable="false">DECLINED</string>
@@ -9,4 +10,11 @@
     <string name="status_review" translatable="false">REVIEW</string>
     <string name="task_title_hint">Task title</string>
     <string name="task_description_hint">Task description</string>
+    <string name="action_sort_title">Sort</string>
+    <string name="action_sort_by_name_title">Sort by name</string>
+    <string name="action_sort_by_date_title">Sort by date</string>
+    <string name="action_sort_by_creator_name_title">Sort by creator name</string>
+    <string name="action_sort_by_priority_title">Sort by priority</string>
+    <string name="action_hide_completed_title">Hide completed</string>
+    <string name="action_delete_all_completed_title">Delete all completed</string>
 </resources>
