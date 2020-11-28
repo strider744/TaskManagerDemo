@@ -5,16 +5,22 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.strider.taskmanager.R
 import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.FragmentHomeBinding
 import com.strider.taskmanager.enums.SortOrder
 import com.strider.taskmanager.preferenses.ApplicationPrefs
+import com.strider.taskmanager.ui.events.TasksEvent
 import com.strider.taskmanager.utils.observeNotNull
 import com.strider.taskmanager.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @ExperimentalCoroutinesApi
@@ -36,6 +42,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 layoutManager = LinearLayoutManager(requireContext())
                 setHasFixedSize(true)
             }
+            setUpItemTouchHelper(taskAdapter, rvTasks)
         }
 
         setHasOptionsMenu(true)
@@ -45,7 +52,37 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             taskAdapter.submitList(it)
         }
 
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is TasksEvent.ShowUndoDeleteMessage -> {
+                        Snackbar.make(requireView(), getString(R.string.task_deleted_message), Snackbar.LENGTH_LONG)
+                            .setAction(getString(R.string.undo_upper_text)) {
+                                viewModel.onUndoDeleteClick(event.task)
+                            }.show()
+                    }
+                }
+            }
+        }
+
         viewModel.setUpDatabase()
+    }
+
+    private fun setUpItemTouchHelper(adapter: TaskAdapter, rvTasks: RecyclerView) {
+        ItemTouchHelper(object :ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val task = adapter.currentList[viewHolder.absoluteAdapterPosition]
+                viewModel.onTaskSwiped(task)
+            }
+        }).attachToRecyclerView(rvTasks)
     }
 
     private fun getOnItemClickListener(): OnItemClickListener {

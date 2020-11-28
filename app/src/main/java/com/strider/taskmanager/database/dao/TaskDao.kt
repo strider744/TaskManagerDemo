@@ -52,7 +52,7 @@ interface TaskDao {
 
     // delete
     @Query("DELETE FROM task_table WHERE id = :id")
-    suspend fun deleteById(id: Int): Int
+    suspend fun deleteTask(id: Int): Int
 
     // delete
     @Query("DELETE FROM task_table")
