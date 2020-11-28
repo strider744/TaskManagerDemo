@@ -16,6 +16,7 @@ data class Task(
     val id: Int = 0,
 
     val isCompleted: Boolean = false,
+    val isDeleted: Boolean = false,
     val description: String = "",
     val creatorName: String = "",
     val status: String = Status.WIP.status,

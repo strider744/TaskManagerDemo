@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.strider.taskmanager.R
 import com.strider.taskmanager.databinding.FragmentHomeBinding
 import com.strider.taskmanager.enums.SortOrder
-import com.strider.taskmanager.view.observeNotNull
-import com.strider.taskmanager.view.onQueryTextChanged
+import com.strider.taskmanager.preferenses.ApplicationPrefs
+import com.strider.taskmanager.utils.observeNotNull
+import com.strider.taskmanager.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -36,7 +39,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         setHasOptionsMenu(true)
 
-        viewModel.tasks.observeNotNull(viewLifecycleOwner) {
+        viewModel.tasksFlow.observeNotNull(viewLifecycleOwner) {
             Timber.e("qwe list $it")
             taskAdapter.submitList(it)
         }
@@ -58,25 +61,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort_by_name -> {
-                viewModel.sortOrder.value = SortOrder.BY_NAME
+                ApplicationPrefs.sortOrder= SortOrder.BY_NAME
                 true
             }
             R.id.action_sort_by_date -> {
-                viewModel.sortOrder.value = SortOrder.BY_DATE
+                ApplicationPrefs.sortOrder = SortOrder.BY_DATE
                 true
             }
             R.id.action_sort_by_creator_name -> {
-                viewModel.sortOrder.value = SortOrder.BY_CREATOR
+                ApplicationPrefs.sortOrder = SortOrder.BY_CREATOR
                 true
             }
             R.id.action_sort_by_priority -> {
-                viewModel.sortOrder.value = SortOrder.BY_PRIORITY
+                ApplicationPrefs.sortOrder = SortOrder.BY_PRIORITY
                 true
             }
             R.id.action_delete_all_completed_tasks -> {
                 true
             }
             R.id.action_hide_completed_tasks -> {
+                item.isChecked  = !item.isChecked
+                ApplicationPrefs.hideCompleted = item.isChecked
                 true
             }
             else -> super.onOptionsItemSelected(item)

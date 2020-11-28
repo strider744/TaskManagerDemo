@@ -1,4 +1,4 @@
-package com.strider.taskmanager.view
+package com.strider.taskmanager.utils
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

@@ -30,7 +30,7 @@
             android:textColor="@color/white"
             tools:text="Title" />
 
-        <com.strider.taskmanager.view.TaskStatusView
+        <com.strider.taskmanager.ui.view.TaskStatusView
             android:id="@+id/task_status_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

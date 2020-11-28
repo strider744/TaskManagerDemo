@@ -1,3 +1,8 @@
 package com.strider.taskmanager.enums
 
-enum class SortOrder { BY_NAME, BY_DATE, BY_CREATOR, BY_PRIORITY }
+enum class SortOrder(val id: Int) {
+    BY_DATE(0),
+    BY_NAME(1),
+    BY_PRIORITY(2),
+    BY_CREATOR(3)
+}
