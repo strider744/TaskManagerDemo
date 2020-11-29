@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.FragmentHomeBinding
 import com.strider.taskmanager.enums.SortOrder
 import com.strider.taskmanager.preferenses.ApplicationPrefs
+import com.strider.taskmanager.ui.MainViewModel
 import com.strider.taskmanager.ui.events.TasksEvent
 import com.strider.taskmanager.utils.observeNotNull
 import com.strider.taskmanager.utils.onQueryTextChanged
@@ -43,6 +45,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 setHasFixedSize(true)
             }
             setUpItemTouchHelper(taskAdapter, rvTasks)
+
+            btnAdd.setOnClickListener {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(
+                        getString(R.string.task_title_text), null
+                    )
+                )
+            }
         }
 
         setHasOptionsMenu(true)
@@ -56,7 +66,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             viewModel.events.collect { event ->
                 when (event) {
                     is TasksEvent.ShowUndoDeleteMessage -> {
-                        Snackbar.make(requireView(), getString(R.string.task_deleted_message), Snackbar.LENGTH_LONG)
+                        Snackbar.make(
+                            requireView(),
+                            getString(R.string.task_deleted_message),
+                            Snackbar.LENGTH_LONG
+                        )
                             .setAction(getString(R.string.undo_upper_text)) {
                                 viewModel.onUndoDeleteClick(event.task)
                             }.show()
@@ -65,11 +79,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
 
-        viewModel.setUpDatabase()
+//        viewModel.setUpDatabase()
     }
 
     private fun setUpItemTouchHelper(adapter: TaskAdapter, rvTasks: RecyclerView) {
-        ItemTouchHelper(object :ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -86,9 +100,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun getOnItemClickListener(): OnItemClickListener {
-        return object : OnItemClickListener{
+        return object : OnItemClickListener {
             override fun onItemClick(item: Task) {
-
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(item.name, item)
+                findNavController().navigate(action)
             }
 
             override fun onCheckBoxClick(item: Task, isChecked: Boolean) {
@@ -103,6 +119,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val searchItem = menu.findItem(R.id.action_search)
         val searchView = searchItem.actionView as SearchView
 
+        val cbHideCompleted = menu.findItem(R.id.action_hide_completed_tasks)
+        cbHideCompleted.isChecked = ApplicationPrefs.hideCompleted
+
         searchView.onQueryTextChanged {
             viewModel.searchQuery.value = it
         }
@@ -111,7 +130,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_sort_by_name -> {
-                ApplicationPrefs.sortOrder= SortOrder.BY_NAME
+                ApplicationPrefs.sortOrder = SortOrder.BY_NAME
                 true
             }
             R.id.action_sort_by_date -> {
@@ -130,7 +149,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 true
             }
             R.id.action_hide_completed_tasks -> {
-                item.isChecked  = !item.isChecked
+                item.isChecked = !item.isChecked
                 ApplicationPrefs.hideCompleted = item.isChecked
                 true
             }

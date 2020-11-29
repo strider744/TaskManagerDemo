@@ -1,4 +1,4 @@
-package com.strider.taskmanager.ui.home
+package com.strider.taskmanager.ui
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -48,10 +48,6 @@ class MainViewModel @ViewModelInject constructor(
             database.taskDao.insert(Task("Repair my bike"))
             database.taskDao.insert(Task("Call Elon Musk", priority = Priority.LOW.id))
         }
-    }
-
-    fun onTaskSelected(task: Task) {
-
     }
 
     fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
