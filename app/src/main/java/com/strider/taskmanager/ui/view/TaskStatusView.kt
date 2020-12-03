@@ -33,8 +33,6 @@ class TaskStatusView @JvmOverloads constructor(
 
     // устанавливаем статус
     fun setStatus(statusId: Int) {
-        Timber.e("qwe status $statusId")
-
         when (statusId) {
             Status.DECLINED.id -> setData(R.drawable.bg_status_declined, Status.DECLINED.status)
             Status.REVIEW.id -> setData(R.drawable.bg_status_review, Status.REVIEW.status)
@@ -45,26 +43,8 @@ class TaskStatusView @JvmOverloads constructor(
     }
 
     // устанавливаем статус
-    fun setStatus(status: String) {
-        Timber.e("qwe status $status")
-        when (status) {
-            Status.DECLINED.status -> setData(R.drawable.bg_status_declined, Status.DECLINED.status)
-            Status.REVIEW.status -> setData(R.drawable.bg_status_review, Status.REVIEW.status)
-            Status.WIP.status -> setData(R.drawable.bg_status_wip, Status.WIP.status)
-            Status.TODO.status -> setData(R.drawable.bg_status_todo, Status.TODO.status)
-            else -> setData(R.drawable.bg_status_none, Status.NONE.status)
-        }
-    }
-
-    // устанавливаем статус
     fun setStatus(status: Status) {
-        when (status) {
-            Status.DECLINED -> setData(R.drawable.bg_status_declined, Status.DECLINED.status)
-            Status.REVIEW -> setData(R.drawable.bg_status_review, Status.REVIEW.status)
-            Status.WIP -> setData(R.drawable.bg_status_wip, Status.WIP.status)
-            Status.TODO  -> setData(R.drawable.bg_status_todo, Status.TODO.status)
-            else -> setData(R.drawable.bg_status_none, Status.NONE.status)
-        }
+        setStatus(status.id)
     }
 
     // устанавливаем аттрибуты

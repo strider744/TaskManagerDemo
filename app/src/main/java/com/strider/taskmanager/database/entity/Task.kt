@@ -19,7 +19,7 @@ data class Task(
     val isDeleted: Boolean = false,
     val description: String = "",
     val creatorName: String = "",
-    val status: String = Status.WIP.status,
+    val status: Int = Status.NONE.id,
     val priority: Int = Priority.NONE.id,
     val changes: List<Change> = listOf(),
     val createdAt: Long = System.currentTimeMillis(),

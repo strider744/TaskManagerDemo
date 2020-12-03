@@ -20,9 +20,12 @@ interface TaskDao {
     @Update
     suspend fun update(task: Task)
 
+    @Update
+    suspend fun update(list: List<Task>)
+
     // query
     @Query("SELECT * FROM task_table")
-    fun getAll(): LiveData<List<Task>>
+    suspend fun getAll(): List<Task>
 
     // query
     fun getTasks(

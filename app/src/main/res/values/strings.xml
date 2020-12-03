@@ -3,6 +3,7 @@
 
     <string name="status_text" translatable="false">Status</string>
     <string name="action_search_title" translatable="false">Search</string>
+    <string name="action_save_task" translatable="false">Save</string>
     <string name="status_wip" translatable="false">WIP</string>
     <string name="status_todo" translatable="false">TODO</string>
     <string name="status_declined" translatable="false">DECLINED</string>
@@ -18,6 +19,7 @@
     <string name="action_hide_completed_title">Hide completed</string>
     <string name="action_delete_all_completed_title">Delete all completed</string>
     <string name="task_deleted_message">Task deleted</string>
+    <string name="task_saved_message">Task saved</string>
     <string name="undo_upper_text">UNDO</string>
     <string name="task_title_text">Task</string>
 </resources>

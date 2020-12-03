@@ -17,7 +17,7 @@ import com.strider.taskmanager.databinding.FragmentHomeBinding
 import com.strider.taskmanager.enums.SortOrder
 import com.strider.taskmanager.preferenses.ApplicationPrefs
 import com.strider.taskmanager.ui.MainViewModel
-import com.strider.taskmanager.ui.events.TasksEvent
+import com.strider.taskmanager.events.TasksEvent
 import com.strider.taskmanager.utils.observeNotNull
 import com.strider.taskmanager.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +29,7 @@ import timber.log.Timber
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,8 +48,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             btnAdd.setOnClickListener {
                 findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(
-                        getString(R.string.task_title_text), null
+                    HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(getString(R.string.task_title_text), null
                     )
                 )
             }
@@ -78,8 +77,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
-
-//        viewModel.setUpDatabase()
     }
 
     private fun setUpItemTouchHelper(adapter: TaskAdapter, rvTasks: RecyclerView) {
@@ -146,6 +143,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 true
             }
             R.id.action_delete_all_completed_tasks -> {
+                viewModel.deleteAllCompletedTasks()
                 true
             }
             R.id.action_hide_completed_tasks -> {

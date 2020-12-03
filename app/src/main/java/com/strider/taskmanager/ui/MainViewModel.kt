@@ -7,8 +7,10 @@ import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.enums.Priority
 import com.strider.taskmanager.enums.Status
 import com.strider.taskmanager.preferenses.ApplicationPrefs
-import com.strider.taskmanager.ui.events.TasksEvent
+import com.strider.taskmanager.events.TasksEvent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -41,7 +43,7 @@ class MainViewModel @ViewModelInject constructor(
             database.taskDao.deleteAllData()
             database.taskDao.insert(Task("Wash the dishes", priority = Priority.HIGH.id))
             database.taskDao.insert(Task("Do the laundry", priority = Priority.HIGH.id))
-            database.taskDao.insert(Task("Buy groceries", status = Status.DECLINED.status))
+            database.taskDao.insert(Task("Buy groceries", status = Status.DECLINED.id))
             database.taskDao.insert(Task("Prepare food", priority = Priority.MEDIUM.id))
             database.taskDao.insert(Task("Call mom"))
             database.taskDao.insert(Task("Visit grandma"))
@@ -65,5 +67,11 @@ class MainViewModel @ViewModelInject constructor(
 
     fun onUndoDeleteClick(task: Task) = viewModelScope.launch {
         database.taskDao.update(task.copy(isDeleted = false))
+    }
+
+    fun deleteAllCompletedTasks() = viewModelScope.launch {
+        val taskList = database.taskDao.getAll()
+        database.taskDao.update(taskList.filter { it.isCompleted }
+            .map { it.copy(isDeleted = true) })
     }
 }
