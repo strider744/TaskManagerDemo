@@ -1,4 +1,4 @@
-package com.strider.taskmanager.ui.home
+package com.strider.taskmanager.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,8 +21,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

@@ -12,5 +12,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
 
+    <style name="CustomSpinnerItem" parent="Widget.AppCompat.TextView.SpinnerItem">
+        <item name="maxLines">1</item>
+    </style>
+
+    <style name="CustomSpinnerDropDownItem" parent="TextAppearance.AppCompat.Widget.DropDownItem">
+        <item name="maxLines">1</item>
+    </style>
 
 </resources>

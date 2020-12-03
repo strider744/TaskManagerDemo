@@ -1,6 +1,7 @@
 package com.strider.taskmanager.database.entity
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.strider.taskmanager.enums.Priority
@@ -9,24 +10,26 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "task_table")
 @Parcelize
-data class DBTask(
+data class Task(
+    val name: String,
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val title: String,
+    val id: Int = 0,
+
     val isCompleted: Boolean = false,
-    val description: String,
-    val creatorName: String,
-    val status: Status,
-    val priority: Priority,
+    val isDeleted: Boolean = false,
+    val description: String = "",
+    val creatorName: String = "",
+    val status: Int = Status.NONE.id,
+    val priority: Int = Priority.NONE.id,
     val changes: List<Change> = listOf(),
     val createdAt: Long = System.currentTimeMillis(),
-    val lastChange: Long
+    val lastChange: Long = System.currentTimeMillis()
 ) : Parcelable {
 
     @Parcelize
     data class Change(
-        val changer: String,
-        val time: Long,
-        val change: String
+        val changer: String = "",
+        val time: Long = System.currentTimeMillis(),
+        val change: String = ""
     ): Parcelable
 }

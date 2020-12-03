@@ -1,4 +1,4 @@
-package com.strider.taskmanager.view
+package com.strider.taskmanager.ui.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -34,27 +34,21 @@ class TaskStatusView @JvmOverloads constructor(
     // устанавливаем статус
     fun setStatus(statusId: Int) {
         when (statusId) {
-            Status.DECLINED.id -> setViewData(R.drawable.bg_status_declined, Status.DECLINED.status)
-            Status.REVIEW.id -> setViewData(R.drawable.bg_status_review, Status.REVIEW.status)
-            Status.WIP.id -> setViewData(R.drawable.bg_status_wip, Status.REVIEW.status)
-            Status.TODO.id -> setViewData(R.drawable.bg_status_todo, Status.REVIEW.status)
-            else -> setViewData(R.drawable.bg_status_none, Status.NONE.status)
+            Status.DECLINED.id -> setData(R.drawable.bg_status_declined, Status.DECLINED.status)
+            Status.REVIEW.id -> setData(R.drawable.bg_status_review, Status.REVIEW.status)
+            Status.WIP.id -> setData(R.drawable.bg_status_wip, Status.WIP.status)
+            Status.TODO.id -> setData(R.drawable.bg_status_todo, Status.TODO.status)
+            else -> setData(R.drawable.bg_status_none, Status.NONE.status)
         }
     }
 
     // устанавливаем статус
     fun setStatus(status: Status) {
-        when (status) {
-            Status.DECLINED -> setViewData(R.drawable.bg_status_declined, Status.DECLINED.status)
-            Status.REVIEW -> setViewData(R.drawable.bg_status_review, Status.REVIEW.status)
-            Status.WIP -> setViewData(R.drawable.bg_status_wip, Status.REVIEW.status)
-            Status.TODO  -> setViewData(R.drawable.bg_status_todo, Status.REVIEW.status)
-            else -> setViewData(R.drawable.bg_status_none, Status.NONE.status)
-        }
+        setStatus(status.id)
     }
 
     // устанавливаем аттрибуты
-    private fun setViewData(@DrawableRes id: Int, text: String) {
+    private fun setData(@DrawableRes id: Int, text: String) {
         tv_task_status.text = text
         tv_task_status.setBackgroundResource(id)
     }

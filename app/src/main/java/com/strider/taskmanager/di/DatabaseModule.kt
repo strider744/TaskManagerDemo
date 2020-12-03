@@ -1,7 +1,7 @@
 package com.strider.taskmanager.di
 
 import androidx.room.Room
-import com.strider.taskmanager.database.entity.AppDatabase
+import com.strider.taskmanager.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +17,6 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase() =
         Room.databaseBuilder(appCtx, AppDatabase::class.java, "Task.db")
+            .fallbackToDestructiveMigration()
             .build()
 }

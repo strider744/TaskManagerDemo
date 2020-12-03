@@ -7,4 +7,6 @@
 
     <!--margin-->
     <dimen name="margin_base_20">20dp</dimen>
+    <dimen name="margin_base_12">12dp</dimen>
+    <dimen name="margin_base_8">8dp</dimen>
 </resources>
