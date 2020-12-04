@@ -1,24 +1,29 @@
 package com.strider.taskmanager.ui.details
 
+import android.app.Activity
+import android.content.DialogInterface
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.onNavDestinationSelected
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
-import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.strider.taskmanager.R
-import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.FragmentTaskDetailsBinding
 import com.strider.taskmanager.enums.Status
+import com.strider.taskmanager.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.newSingleThreadContext
-import org.jetbrains.anko.sdk27.coroutines.onItemSelectedListener
 import splitties.init.appCtx
 import timber.log.Timber
 
@@ -90,10 +95,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_save_task -> saveTask()
-            else -> super.onOptionsItemSelected(item)
-        }
+        saveTask()
+        return super.onOptionsItemSelected(item)
     }
 
     private fun saveTask(): Boolean {
@@ -102,13 +105,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
             status = binding.spinnerTaskStatus.selectedItemPosition
         )
         viewModel.saveTask()
-
-        Snackbar.make(
-            requireView(),
-            getString(R.string.task_saved_message),
-            Snackbar.LENGTH_LONG
-        ).show()
-
+        hideKeyboard(view)
+        findNavController().navigate(TaskDetailsFragmentDirections.actionSave(true))
         return true
     }
 }
