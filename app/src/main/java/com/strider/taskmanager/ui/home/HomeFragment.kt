@@ -124,10 +124,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_fragment_home, menu)
 
@@ -152,10 +148,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 ApplicationPrefs.sortOrder = SortOrder.BY_DATE
                 true
             }
-            R.id.action_sort_by_creator_name -> {
-                ApplicationPrefs.sortOrder = SortOrder.BY_CREATOR
-                true
-            }
+//            R.id.action_sort_by_creator_name -> {
+//                ApplicationPrefs.sortOrder = SortOrder.BY_CREATOR
+//                true
+//            }
             R.id.action_sort_by_priority -> {
                 ApplicationPrefs.sortOrder = SortOrder.BY_PRIORITY
                 true

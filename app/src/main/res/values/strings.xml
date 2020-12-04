@@ -11,7 +11,6 @@
 
     <string name="action_sort_by_name_title">Sort by name</string>
     <string name="action_sort_by_date_title">Sort by date</string>
-    <string name="action_sort_by_creator_name_title">Sort by creator name</string>
     <string name="action_sort_by_priority_title">Sort by priority</string>
 
     <string name="action_hide_completed_title">Hide completed</string>
