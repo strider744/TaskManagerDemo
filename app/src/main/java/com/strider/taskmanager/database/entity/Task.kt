@@ -18,7 +18,7 @@ data class Task(
     val isCompleted: Boolean = false,
     val isDeleted: Boolean = false,
     val description: String = "",
-    val creatorName: String = "",
+//    val creatorName: String = "",
     val status: Int = Status.NONE.id,
     val priority: Int = Priority.NONE.id,
     val changes: List<Change> = listOf(),
@@ -28,7 +28,7 @@ data class Task(
 
     @Parcelize
     data class Change(
-        val changer: String = "",
+//        val changer: String = "",
         val time: Long = System.currentTimeMillis(),
         val change: String = ""
     ): Parcelable

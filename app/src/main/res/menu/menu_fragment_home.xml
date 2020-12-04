@@ -24,9 +24,9 @@
                 android:id="@+id/action_sort_by_date"
                 android:title="@string/action_sort_by_date_title" />
 
-            <item
-                android:id="@+id/action_sort_by_creator_name"
-                android:title="@string/action_sort_by_creator_name_title" />
+<!--            <item-->
+<!--                android:id="@+id/action_sort_by_creator_name"-->
+<!--                android:title="@string/action_sort_by_creator_name_title" />-->
 
             <item
                 android:id="@+id/action_sort_by_priority"

@@ -34,7 +34,7 @@ interface TaskDao {
         hideCompleted: Boolean = false
     ): Flow<List<Task>> {
         return when(sortOrder) {
-            SortOrder.BY_CREATOR -> getSortedByCreator(query, hideCompleted)
+//            SortOrder.BY_CREATOR -> getSortedByCreator(query, hideCompleted)
             SortOrder.BY_DATE -> getSortedByDate(query, hideCompleted)
             SortOrder.BY_NAME -> getSortedByName(query, hideCompleted)
             SortOrder.BY_PRIORITY -> getSortedByPriority(query, hideCompleted)
@@ -47,8 +47,8 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY createdAt DESC")
     fun getSortedByDate(query: String, hideCompleted: Boolean): Flow<List<Task>>
 
-    @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY creatorName")
-    fun getSortedByCreator(query: String, hideCompleted: Boolean): Flow<List<Task>>
+//    @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY creatorName")
+//    fun getSortedByCreator(query: String, hideCompleted: Boolean): Flow<List<Task>>
 
     @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY priority DESC")
     fun getSortedByPriority(query: String, hideCompleted: Boolean): Flow<List<Task>>

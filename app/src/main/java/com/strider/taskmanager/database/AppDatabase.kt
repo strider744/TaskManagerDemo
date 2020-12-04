@@ -7,7 +7,7 @@ import com.strider.taskmanager.database.converter.ListTaskChangesConverter
 import com.strider.taskmanager.database.dao.TaskDao
 import com.strider.taskmanager.database.entity.Task
 
-@Database(entities = [Task::class], version = 5, exportSchema = true)
+@Database(entities = [Task::class], version = 6, exportSchema = true)
 @TypeConverters(ListTaskChangesConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val taskDao: TaskDao
