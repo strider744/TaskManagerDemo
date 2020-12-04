@@ -1,5 +1,6 @@
 package com.strider.taskmanager.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -7,9 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.strider.taskmanager.R
 import com.strider.taskmanager.database.entity.Task
@@ -30,6 +33,7 @@ import timber.log.Timber
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: MainViewModel by viewModels()
+    private val args: HomeFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,10 +52,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             btnAdd.setOnClickListener {
                 findNavController().navigate(
-                    HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(getString(R.string.task_title_text), null
+                    HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(
+                        getString(R.string.task_title_text), null
                     )
                 )
             }
+        }
+
+        if (args.action) {
+            Snackbar.make(
+                requireView(),
+                getString(R.string.task_saved_message),
+                Snackbar.LENGTH_LONG
+            ).apply {
+                animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
+            }.show()
         }
 
         setHasOptionsMenu(true)
@@ -69,10 +84,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             requireView(),
                             getString(R.string.task_deleted_message),
                             Snackbar.LENGTH_LONG
-                        )
-                            .setAction(getString(R.string.undo_upper_text)) {
-                                viewModel.onUndoDeleteClick(event.task)
-                            }.show()
+                        ).setAction(getString(R.string.undo_upper_text)) {
+                            viewModel.onUndoDeleteClick(event.task)
+                        }.show()
                     }
                 }
             }
@@ -108,6 +122,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 viewModel.onTaskCheckedChanged(item, isChecked)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
