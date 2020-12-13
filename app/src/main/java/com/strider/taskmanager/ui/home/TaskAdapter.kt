@@ -1,15 +1,19 @@
 package com.strider.taskmanager.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.ItemTaskBinding
+import com.strider.taskmanager.enums.Priority
+import com.strider.taskmanager.enums.Status
 import timber.log.Timber
 
-class TaskAdapter(private val listener: OnItemClickListener) : ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback())  {
+class TaskAdapter(private val listener: OnItemClickListener) :
+    ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,7 +25,8 @@ class TaskAdapter(private val listener: OnItemClickListener) : ListAdapter<Task,
         holder.bind(currentItem)
     }
 
-    inner class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(private val binding: ItemTaskBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.apply {
@@ -46,9 +51,27 @@ class TaskAdapter(private val listener: OnItemClickListener) : ListAdapter<Task,
             binding.apply {
                 cbCompleted.isChecked = task.isCompleted
                 tvTaskTitle.text = task.name
-                taskStatusView.setStatus(task.status)
+
+                if (task.status == Status.NONE.id) {
+                    taskStatusView.visibility = View.GONE
+                } else {
+                    taskStatusView.visibility = View.VISIBLE
+                    taskStatusView.setStatus(task.status)
+                }
+                if (task.priority == Priority.NONE.id) {
+                    taskPriorityView.visibility = View.GONE
+                } else {
+                    taskPriorityView.visibility = View.VISIBLE
+                    taskPriorityView.setPriority(task.priority)
+                }
             }
         }
+    }
+
+    override fun onViewRecycled(holder: TaskViewHolder) {
+        super.onViewRecycled(holder)
+
+        Timber.e("qwe onViewRecycled")
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Task>() {

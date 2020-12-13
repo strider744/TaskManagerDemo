@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--стиль для TaskStatusView-->
     <declare-styleable name="TaskStatusView">
         <attr name="status" format="enum">
             <enum name="none" value="0"/>
@@ -7,6 +8,16 @@
             <enum name="wip" value="2"/>
             <enum name="review" value="3"/>
             <enum name="declined" value="4"/>
+        </attr>
+    </declare-styleable>
+
+    <!--стиль для TaskPriorityView-->
+    <declare-styleable name="TaskPriorityView">
+        <attr name="priority" format="enum">
+            <enum name="none" value="0"/>
+            <enum name="low" value="1"/>
+            <enum name="medium" value="2"/>
+            <enum name="high" value="3"/>
         </attr>
     </declare-styleable>
 </resources>

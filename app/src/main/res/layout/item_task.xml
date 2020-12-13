@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_base_8">
@@ -12,34 +12,46 @@
             android:id="@+id/cb_completed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:minWidth="0dp"
             android:minHeight="0dp" />
 
         <TextView
             android:id="@+id/tv_task_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/cb_completed"
-            android:layout_alignBottom="@id/cb_completed"
-            android:layout_toStartOf="@id/task_status_view"
-            android:layout_toEndOf="@id/cb_completed"
+            app:layout_constraintStart_toEndOf="@id/cb_completed"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/task_priority_view"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:textColor="@color/white"
             tools:text="Title" />
 
+        <com.strider.taskmanager.ui.view.TaskPriorityView
+            android:id="@+id/task_priority_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/margin_84"
+            android:layout_toStartOf="@id/task_status_view"
+            app:priority="medium" />
+
         <com.strider.taskmanager.ui.view.TaskStatusView
             android:id="@+id/task_status_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/cb_completed"
-            android:layout_alignBottom="@id/cb_completed"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            app:status="none" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:status="declined" />
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

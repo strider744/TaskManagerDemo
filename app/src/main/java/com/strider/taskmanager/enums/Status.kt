@@ -1,9 +1,9 @@
 package com.strider.taskmanager.enums
 
 enum class Status(val status: String, val id: Int) {
-    NONE("NONE", 0),
-    TODO("TODO", 1),
-    WIP("WIP", 2),
-    REVIEW("REVIEW", 3),
-    DECLINED("DECLINED", 4),
+    NONE("None", 0),
+    TODO("Todo", 1),
+    WIP("Wip", 2),
+    REVIEW("Review", 3),
+    DECLINED("Declined", 4),
 }

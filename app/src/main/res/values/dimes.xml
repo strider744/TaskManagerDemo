@@ -9,4 +9,9 @@
     <dimen name="margin_base_20">20dp</dimen>
     <dimen name="margin_base_12">12dp</dimen>
     <dimen name="margin_base_8">8dp</dimen>
+    <dimen name="margin_84">84dp</dimen>
+
+    <!--sizes-->
+    <dimen name="view_status_width">80dp</dimen>
+    <dimen name="view_priority_width">64dp</dimen>
 </resources>

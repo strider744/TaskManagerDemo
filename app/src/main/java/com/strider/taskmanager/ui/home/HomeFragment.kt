@@ -1,6 +1,5 @@
 package com.strider.taskmanager.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.strider.taskmanager.R
 import com.strider.taskmanager.database.entity.Task
@@ -26,7 +24,6 @@ import com.strider.taskmanager.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -34,15 +31,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val viewModel: MainViewModel by viewModels()
     private val args: HomeFragmentArgs by navArgs()
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentHomeBinding.bind(view)
-
+        binding = FragmentHomeBinding.bind(view)
         val taskAdapter = TaskAdapter(getOnItemClickListener())
 
         binding.apply {
+
             rvTasks.apply {
                 adapter = taskAdapter
                 layoutManager = LinearLayoutManager(requireContext())
@@ -64,15 +62,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 requireView(),
                 getString(R.string.task_saved_message),
                 Snackbar.LENGTH_LONG
-            ).apply {
-                animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
-            }.show()
+            ).show()
         }
 
         setHasOptionsMenu(true)
 
         viewModel.tasksFlow.observeNotNull(viewLifecycleOwner) {
-            Timber.e("qwe list $it")
             taskAdapter.submitList(it)
         }
 
@@ -91,6 +86,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
     }
 
     private fun setUpItemTouchHelper(adapter: TaskAdapter, rvTasks: RecyclerView) {
