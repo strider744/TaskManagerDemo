@@ -21,7 +21,6 @@ import com.strider.taskmanager.enums.Status
 import com.strider.taskmanager.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import splitties.init.appCtx
-import timber.log.Timber
 
 @AndroidEntryPoint
 class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
@@ -99,6 +98,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
             ) {
                 viewModel.onTaskPriorityChanged(position)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
@@ -113,6 +113,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
             ) {
                 viewModel.onTaskStatusChanged(position)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }

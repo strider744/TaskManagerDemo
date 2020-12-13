@@ -68,12 +68,6 @@ class TaskAdapter(private val listener: OnItemClickListener) :
         }
     }
 
-    override fun onViewRecycled(holder: TaskViewHolder) {
-        super.onViewRecycled(holder)
-
-        Timber.e("qwe onViewRecycled")
-    }
-
     class DiffCallback : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task) =
             oldItem.id == newItem.id
