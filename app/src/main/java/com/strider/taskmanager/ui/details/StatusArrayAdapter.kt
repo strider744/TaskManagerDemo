@@ -1,6 +1,7 @@
 package com.strider.taskmanager.ui.details
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import com.strider.taskmanager.R
+import com.strider.taskmanager.enums.Priority
 import com.strider.taskmanager.enums.Status
 import kotlinx.android.synthetic.main.view_task_status.view.*
 
@@ -46,6 +48,10 @@ class StatusArrayAdapter(
 
     // устанавливаем аттрибуты
     private fun setData(@DrawableRes id: Int, text: String, view: TextView) {
+        if (text == Priority.NONE.priority)
+            view.setTextColor(Color.WHITE)
+        else
+            view.setTextColor(Color.BLACK)
         view.text = text
         view.setBackgroundResource(id)
     }

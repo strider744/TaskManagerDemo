@@ -97,10 +97,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
                 position: Int,
                 id: Long
             ) {
-                Timber.e("qwe position $position")
                 viewModel.onTaskPriorityChanged(position)
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
@@ -115,7 +113,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
             ) {
                 viewModel.onTaskStatusChanged(position)
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
