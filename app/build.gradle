@@ -21,7 +21,7 @@ android {
         javaCompileOptions {
 
             annotationProcessorOptions {
-                includeCompileClasspath = true
+                includeCompileClasspath = false
                 arguments += [
                         "room.schemaLocation":"$projectDir/schemas".toString(),
                         "room.incremental":"true",
@@ -132,10 +132,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-process:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
 
     // room
     implementation "androidx.room:room-ktx:$room_version"
@@ -150,9 +149,6 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava3:rxkotlin:$rxkotlin_version"
     implementation "com.jakewharton.rxbinding4:rxbinding:$rxbinding4_version"
-
-    // RxPermissions
-    implementation "com.github.tbruyelle:rxpermissions:$rxpermissions_version"
 
     // AutoDisposable Uber
     implementation "com.uber.autodispose2:autodispose:$autodispose2_version"
@@ -190,12 +186,6 @@ dependencies {
 
     // appctx
     implementation("com.louiscad.splitties:splitties-appctx:$splitties_version")
-
-    // google location
-    implementation "com.google.android.gms:play-services-location:$google_location_version"
-
-    //Elastic view
-    implementation "com.github.skydoves:elasticviews:$elastic_version"
 
     // Tests dependencies
     androidTestImplementation "androidx.test.ext:junit:$test_junit_version"

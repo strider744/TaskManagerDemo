@@ -45,14 +45,19 @@ class MainViewModel @ViewModelInject constructor(
             database.taskDao.insert(Task("Do the laundry", priority = Priority.HIGH.id))
             database.taskDao.insert(Task("Buy groceries", status = Status.DECLINED.id))
             database.taskDao.insert(Task("Prepare food", priority = Priority.MEDIUM.id))
-            database.taskDao.insert(Task("Call mom"))
-            database.taskDao.insert(Task("Visit grandma"))
-            database.taskDao.insert(Task("Repair my bike"))
+            database.taskDao.insert(Task("Call mom", priority = Priority.HIGH.id))
+            database.taskDao.insert(Task("Visit grandma", priority = Priority.HIGH.id))
+            database.taskDao.insert(Task("Repair my bike", priority = Priority.HIGH.id))
             database.taskDao.insert(Task("Call Elon Musk", priority = Priority.LOW.id))
         }
     }
 
     fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
+        database.taskDao.update(task.copy(isCompleted = isChecked))
+    }
+
+    fun onTaskCheckedChanged(taskId: Int, isChecked: Boolean) = viewModelScope.launch {
+        val task = database.taskDao.getTaskById(taskId)
         database.taskDao.update(task.copy(isCompleted = isChecked))
     }
 

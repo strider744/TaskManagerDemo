@@ -1,72 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.details.TaskDetailsFragment">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_base_8">
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/et_task_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:hint="@string/task_title_hint"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:textColor="@color/white" />
 
-                <EditText
-                    android:id="@+id/et_task_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/task_title_hint"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:textColor="@color/white" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/status_text"
-                        android:textColor="@color/white" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spinner_task_status"
-                        android:layout_marginStart="@dimen/margin_base_20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:spinnerMode="dropdown" />
-
-                </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_base_8"
+                android:layout_marginBottom="@dimen/margin_base_8">
 
                 <TextView
-                    android:id="@+id/tv_created_at"
+                    android:id="@+id/tv_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/status_text"
                     android:textColor="@color/white"
-                    tools:text="Created At:" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/spinner_task_status"
+                    app:layout_constraintBottom_toBottomOf="@id/spinner_task_status"/>
 
-                <EditText
-                    android:id="@+id/et_task_description"
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_task_status"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/task_description_hint"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:textColor="@color/white" />
+                    android:layout_marginStart="@dimen/margin_base_20"
+                    android:spinnerMode="dropdown"
+                    app:layout_constraintStart_toEndOf="@id/tv_status"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_priority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/priority_text"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toTopOf="@id/spinner_task_priority"
+                    app:layout_constraintBottom_toBottomOf="@id/spinner_task_priority"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-        </ScrollView>
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spinner_task_priority"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_base_8"
+                    app:layout_constraintTop_toBottomOf="@id/spinner_task_status"
+                    app:layout_constraintEnd_toEndOf="@id/spinner_task_status"
+                    android:layout_marginStart="@dimen/margin_base_20"
+                    android:spinnerMode="dropdown" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_created_at"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                tools:text="Created At:" />
+
+            <EditText
+                android:layout_marginTop="@dimen/margin_base_8"
+                android:id="@+id/et_task_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/task_description_hint"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </layout>

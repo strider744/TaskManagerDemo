@@ -2,6 +2,7 @@
     <string name="app_name">Task Manager</string>
 
     <string name="status_text" translatable="false">Status</string>
+    <string name="priority_text" translatable="false">Priority</string>
     <string name="action_search_title" translatable="false">Search</string>
     <string name="action_save_task" translatable="false">Save</string>
 

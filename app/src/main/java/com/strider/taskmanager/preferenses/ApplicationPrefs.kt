@@ -9,6 +9,6 @@ import splitties.init.appCtx
 object ApplicationPrefs : KotprefModel(appCtx) {
     var sortOrder by enumOrdinalPref(SortOrder.BY_DATE)
     val sortOrderLiveData = ApplicationPrefs.asLiveData(ApplicationPrefs::sortOrder)
-    var hideCompleted by booleanPref(false)
+    var hideCompleted by booleanPref(true)
     val hideCompletedLiveData = ApplicationPrefs.asLiveData(ApplicationPrefs::hideCompleted)
 }

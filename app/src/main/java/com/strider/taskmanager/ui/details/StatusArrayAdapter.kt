@@ -11,7 +11,7 @@ import com.strider.taskmanager.R
 import com.strider.taskmanager.enums.Status
 import kotlinx.android.synthetic.main.view_task_status.view.*
 
-class CustomArrayAdapter(
+class StatusArrayAdapter(
     context: Context,
     resource: Int,
     objects: Array<out Status>,

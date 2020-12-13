@@ -1,26 +1,22 @@
 package com.strider.taskmanager.ui.details
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.onNavDestinationSelected
 import autodispose2.androidx.lifecycle.scope
 import autodispose2.autoDispose
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.strider.taskmanager.R
 import com.strider.taskmanager.databinding.FragmentTaskDetailsBinding
+import com.strider.taskmanager.enums.Priority
 import com.strider.taskmanager.enums.Status
 import com.strider.taskmanager.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,15 +34,22 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentTaskDetailsBinding.bind(view)
+
         args.task?.let { task ->
             viewModel.currentTask = task
         }
+
         binding.apply {
             etTaskTitle.setText(viewModel.currentTask.name)
             etTaskDescription.setText(viewModel.currentTask.description)
-            spinnerTaskStatus.adapter = getSpinnerAdapter()
-            spinnerTaskStatus.onItemSelectedListener = getOnItemSelectedListener()
+
+            spinnerTaskStatus.adapter = getStatusSpinnerAdapter()
+            spinnerTaskStatus.onItemSelectedListener = getOnStatusItemSelectedListener()
             spinnerTaskStatus.setSelection(viewModel.currentTask.status)
+
+            spinnerTaskPriority.adapter = getPrioritySpinnerAdapter()
+            spinnerTaskPriority.onItemSelectedListener = getOnPriorityItemSelectedListener()
+            spinnerTaskPriority.setSelection(viewModel.currentTask.priority)
 
             etTaskTitle.textChanges()
                 .autoDispose(scope())
@@ -64,8 +67,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         setHasOptionsMenu(true)
     }
 
-    private fun getSpinnerAdapter(): ArrayAdapter<Status> {
-        val adapter = CustomArrayAdapter(
+    private fun getStatusSpinnerAdapter(): ArrayAdapter<Status> {
+        val adapter = StatusArrayAdapter(
             appCtx,
             R.layout.item_spinner_status,
             Status.values(),
@@ -75,7 +78,34 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         return adapter
     }
 
-    private fun getOnItemSelectedListener(): AdapterView.OnItemSelectedListener {
+    private fun getPrioritySpinnerAdapter(): ArrayAdapter<Priority> {
+        val adapter = PriorityArrayAdapter(
+            appCtx,
+            R.layout.item_spinner_priority,
+            Priority.values(),
+            layoutInflater
+        )
+        adapter.setDropDownViewResource(R.layout.item_dropdown_spinner_priority)
+        return adapter
+    }
+
+    private fun getOnPriorityItemSelectedListener(): AdapterView.OnItemSelectedListener {
+        return object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Timber.e("qwe position $position")
+                viewModel.onTaskPriorityChanged(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun getOnStatusItemSelectedListener(): AdapterView.OnItemSelectedListener {
         return object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,

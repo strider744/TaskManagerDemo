@@ -1,8 +1,8 @@
 package com.strider.taskmanager.enums
 
 enum class Priority(val priority: String, val id: Int) {
-    NONE("", 0),
-    LOW("LOW", 1),
-    MEDIUM("MEDIUM", 2),
-    HIGH("HIGH", 3),
+    NONE("None", 0),
+    HIGH("High", 1),
+    MEDIUM("Medium", 2),
+    LOW("Low", 3),
 }

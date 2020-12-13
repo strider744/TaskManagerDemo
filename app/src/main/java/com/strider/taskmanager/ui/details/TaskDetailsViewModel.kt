@@ -15,7 +15,13 @@ class TaskDetailsViewModel @ViewModelInject constructor(
     var currentTask = Task("")
 
     fun onTaskStatusChanged(status: Int) = viewModelScope.launch {
+        currentTask = currentTask.copy(status = status)
         database.taskDao.update(currentTask.copy(status = status))
+    }
+
+    fun onTaskPriorityChanged(priority: Int) = viewModelScope.launch {
+        currentTask = currentTask.copy(priority = priority)
+        database.taskDao.update(currentTask.copy(priority = priority))
     }
 
     fun saveTask() = viewModelScope.launch {
