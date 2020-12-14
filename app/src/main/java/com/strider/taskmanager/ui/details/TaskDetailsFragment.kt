@@ -18,7 +18,7 @@ import com.strider.taskmanager.R
 import com.strider.taskmanager.databinding.FragmentTaskDetailsBinding
 import com.strider.taskmanager.enums.Priority
 import com.strider.taskmanager.enums.Status
-import com.strider.taskmanager.utils.hideKeyboard
+import com.strider.taskmanager.utils.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import splitties.init.appCtx
 
@@ -34,6 +34,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
 
         binding = FragmentTaskDetailsBinding.bind(view)
         args.task?.let { viewModel.currentTask = it }
+
 
         setData()
         setHasOptionsMenu(true)
@@ -63,6 +64,12 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
                 .subscribe {
                     viewModel.currentTask = viewModel.currentTask.copy(description = it.toString())
                 }
+
+
+            if (viewModel.currentTask.name.isBlank()) {
+                etTaskTitle.requestFocus()
+                showKeyboard(etTaskTitle)
+            }
         }
     }
 
@@ -129,14 +136,12 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
 
     private fun saveTask() {
         if (args.task == viewModel.currentTask || viewModel.currentTask.name.isBlank()) {
-            hideKeyboard(view)
             findNavController().navigate(TaskDetailsFragmentDirections.actionSave(false))
         } else {
             viewModel.currentTask = viewModel.currentTask.copy(
                 lastChange = System.currentTimeMillis(),
             )
             viewModel.saveTask()
-            hideKeyboard(view)
             findNavController().navigate(TaskDetailsFragmentDirections.actionSave(true))
         }
     }

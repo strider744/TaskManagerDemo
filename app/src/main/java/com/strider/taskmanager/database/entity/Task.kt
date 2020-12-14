@@ -1,7 +1,6 @@
 package com.strider.taskmanager.database.entity
 
 import android.os.Parcelable
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.strider.taskmanager.enums.Priority

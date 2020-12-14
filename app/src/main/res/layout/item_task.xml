@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/cb_completed"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/task_priority_view"
+            app:layout_constraintEnd_toStartOf="@id/cl_priority_status_container"
             app:layout_constraintBottom_toBottomOf="parent"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -32,25 +32,39 @@
             android:textColor="@color/white"
             tools:text="Title" />
 
-        <com.strider.taskmanager.ui.view.TaskPriorityView
-            android:id="@+id/task_priority_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_priority_status_container"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/margin_84"
-            android:layout_toStartOf="@id/task_status_view"
-            app:priority="medium" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <com.strider.taskmanager.ui.view.TaskStatusView
-            android:id="@+id/task_status_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:status="declined" />
+            <com.strider.taskmanager.ui.view.TaskPriorityView
+                android:id="@+id/task_priority_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/margin_84"
+                android:layout_toStartOf="@id/task_status_view"
+                app:priority="medium" />
+
+            <com.strider.taskmanager.ui.view.TaskStatusView
+                android:id="@+id/task_status_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:status="declined" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

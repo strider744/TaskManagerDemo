@@ -10,7 +10,6 @@ import com.strider.taskmanager.database.entity.Task
 import com.strider.taskmanager.databinding.ItemTaskBinding
 import com.strider.taskmanager.enums.Priority
 import com.strider.taskmanager.enums.Status
-import timber.log.Timber
 
 class TaskAdapter(private val listener: OnItemClickListener) :
     ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffCallback()) {
@@ -37,6 +36,7 @@ class TaskAdapter(private val listener: OnItemClickListener) :
                         listener.onItemClick(task)
                     }
                 }
+
                 cbCompleted.setOnClickListener {
                     val position = absoluteAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
@@ -69,6 +69,7 @@ class TaskAdapter(private val listener: OnItemClickListener) :
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Task>() {
+
         override fun areItemsTheSame(oldItem: Task, newItem: Task) =
             oldItem.id == newItem.id
 

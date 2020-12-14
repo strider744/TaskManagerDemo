@@ -20,6 +20,7 @@ import com.strider.taskmanager.enums.SortOrder
 import com.strider.taskmanager.preferenses.ApplicationPrefs
 import com.strider.taskmanager.ui.MainViewModel
 import com.strider.taskmanager.events.TasksEvent
+import com.strider.taskmanager.utils.hideKeyboard
 import com.strider.taskmanager.utils.observeNotNull
 import com.strider.taskmanager.utils.onQueryTextChanged
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +40,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding = FragmentHomeBinding.bind(view)
         val taskAdapter = TaskAdapter(getOnItemClickListener())
+        hideKeyboard()
 
         binding.apply {
 
@@ -69,7 +71,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setHasOptionsMenu(true)
 
         viewModel.tasksFlow.observeNotNull(viewLifecycleOwner) {
-            taskAdapter.submitList(it)
+            taskAdapter.submitList(it) {
+                binding.rvTasks.smoothScrollToPosition(0)
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
@@ -93,21 +97,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun getCallBack(): BaseTransientBottomBar.BaseCallback<Snackbar> {
         return object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
             override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                when (event) {
-                    DISMISS_EVENT_TIMEOUT,
-                    DISMISS_EVENT_SWIPE -> viewModel.confirmDeleteTask()
-                    else -> {
-                    }
-                }
+                if (event == DISMISS_EVENT_TIMEOUT || event == DISMISS_EVENT_SWIPE)
+                    viewModel.confirmDeleteTask()
                 super.onDismissed(transientBottomBar, event)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-
     }
 
     private fun setUpItemTouchHelper(adapter: TaskAdapter, rvTasks: RecyclerView) {
@@ -136,7 +130,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
 
             override fun onCheckBoxClick(item: Task, isChecked: Boolean) {
-                viewModel.onTaskCheckedChanged(item, isChecked)
+                viewModel.onTaskCheckedChanged(item.id, isChecked)
             }
         }
     }
