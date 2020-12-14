@@ -47,7 +47,7 @@ interface TaskDao {
     @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY name")
     fun getSortedByName(query: String, hideCompleted: Boolean): Flow<List<Task>>
 
-    @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY createdAt DESC")
+    @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY lastChange DESC")
     fun getSortedByDate(query: String, hideCompleted: Boolean): Flow<List<Task>>
 
 //    @Query("SELECT * FROM task_table WHERE (isCompleted != :hideCompleted OR isCompleted = 0) AND (isDeleted = 0) AND name LIKE '%' || :query || '%' ORDER BY creatorName")
@@ -59,6 +59,9 @@ interface TaskDao {
     // delete
     @Query("DELETE FROM task_table WHERE id = :id")
     suspend fun deleteTask(id: Int): Int
+
+    @Query("DELETE FROM task_table WHERE id IN (:list)")
+    suspend fun deleteTask(list: List<Int>): Int
 
     // delete
     @Query("DELETE FROM task_table")

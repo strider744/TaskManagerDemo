@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.strider.taskmanager.R
 import com.strider.taskmanager.database.entity.Task
@@ -61,7 +62,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             Snackbar.make(
                 requireView(),
                 getString(R.string.task_saved_message),
-                Snackbar.LENGTH_LONG
+                1000
             ).show()
         }
 
@@ -79,11 +80,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             requireView(),
                             getString(R.string.task_deleted_message),
                             Snackbar.LENGTH_LONG
-                        ).setAction(getString(R.string.undo_upper_text)) {
-                            viewModel.onUndoDeleteClick(event.task)
-                        }.show()
+                        ).addCallback(getCallBack())
+                            .setAction(getString(R.string.undo_upper_text)) {
+                                viewModel.onUndoDeleteClick(event.task)
+                            }.show()
                     }
                 }
+            }
+        }
+    }
+
+    private fun getCallBack(): BaseTransientBottomBar.BaseCallback<Snackbar> {
+        return object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                when (event) {
+                    DISMISS_EVENT_TIMEOUT,
+                    DISMISS_EVENT_SWIPE -> viewModel.confirmDeleteTask()
+                    else -> {
+                    }
+                }
+                super.onDismissed(transientBottomBar, event)
             }
         }
     }

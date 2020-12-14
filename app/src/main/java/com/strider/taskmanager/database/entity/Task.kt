@@ -21,15 +21,7 @@ data class Task(
 //    val creatorName: String = "",
     val status: Int = Status.NONE.id,
     val priority: Int = Priority.NONE.id,
-    val changes: List<Change> = listOf(),
+    val changes: List<Task> = listOf(),
     val createdAt: Long = System.currentTimeMillis(),
     val lastChange: Long = System.currentTimeMillis()
-) : Parcelable {
-
-    @Parcelize
-    data class Change(
-//        val changer: String = "",
-        val time: Long = System.currentTimeMillis(),
-        val change: String = ""
-    ): Parcelable
-}
+) : Parcelable

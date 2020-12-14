@@ -33,11 +33,13 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentTaskDetailsBinding.bind(view)
+        args.task?.let { viewModel.currentTask = it }
 
-        args.task?.let { task ->
-            viewModel.currentTask = task
-        }
+        setData()
+        setHasOptionsMenu(true)
+    }
 
+    private fun setData() {
         binding.apply {
             etTaskTitle.setText(viewModel.currentTask.name)
             etTaskDescription.setText(viewModel.currentTask.description)
@@ -62,8 +64,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
                     viewModel.currentTask = viewModel.currentTask.copy(description = it.toString())
                 }
         }
-
-        setHasOptionsMenu(true)
     }
 
     private fun getStatusSpinnerAdapter(): ArrayAdapter<Status> {
@@ -127,14 +127,17 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun saveTask(): Boolean {
-        viewModel.currentTask = viewModel.currentTask.copy(
-            lastChange = System.currentTimeMillis(),
-            status = binding.spinnerTaskStatus.selectedItemPosition
-        )
-        viewModel.saveTask()
-        hideKeyboard(view)
-        findNavController().navigate(TaskDetailsFragmentDirections.actionSave(true))
-        return true
+    private fun saveTask() {
+        if (args.task == viewModel.currentTask || viewModel.currentTask.name.isBlank()) {
+            hideKeyboard(view)
+            findNavController().navigate(TaskDetailsFragmentDirections.actionSave(false))
+        } else {
+            viewModel.currentTask = viewModel.currentTask.copy(
+                lastChange = System.currentTimeMillis(),
+            )
+            viewModel.saveTask()
+            hideKeyboard(view)
+            findNavController().navigate(TaskDetailsFragmentDirections.actionSave(true))
+        }
     }
 }

@@ -9,15 +9,15 @@ import java.lang.reflect.Type
 class ListTaskChangesConverter {
     val gson = Gson()
 
-    val type: Type = object : TypeToken<List<Task.Change?>?>() {}.type
+    val type: Type = object : TypeToken<List<Task?>?>() {}.type
 
     @TypeConverter
-    fun fromList(list: List<Task.Change?>?): String {
+    fun fromList(list: List<Task?>?): String {
         return gson.toJson(list, type)
     }
 
     @TypeConverter
-    fun toList(json: String?): List<Task.Change> {
+    fun toList(json: String?): List<Task> {
         return gson.fromJson(json, type)
     }
 }

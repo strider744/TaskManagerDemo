@@ -22,6 +22,8 @@ class TaskDetailsViewModel @ViewModelInject constructor(
     }
 
     fun saveTask() = viewModelScope.launch {
-        database.taskDao.insert(currentTask)
+        if (currentTask.name.isNotBlank()) {
+            database.taskDao.insert(currentTask)
+        }
     }
 }
