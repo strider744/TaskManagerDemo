@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import autodispose2.androidx.lifecycle.scope
@@ -135,14 +136,19 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
     }
 
     private fun saveTask() {
+        val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
         if (args.task == viewModel.currentTask || viewModel.currentTask.name.isBlank()) {
-            findNavController().navigate(TaskDetailsFragmentDirections.actionSave(false))
+            findNavController().navigate(
+                TaskDetailsFragmentDirections.actionSave(false), navOptions
+            )
         } else {
             viewModel.currentTask = viewModel.currentTask.copy(
                 lastChange = System.currentTimeMillis(),
             )
             viewModel.saveTask()
-            findNavController().navigate(TaskDetailsFragmentDirections.actionSave(true))
+            findNavController().navigate(
+                TaskDetailsFragmentDirections.actionSave(true), navOptions
+            )
         }
     }
 }

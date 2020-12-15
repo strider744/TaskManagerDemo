@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = findNavController(R.id.nav_host_fragment)
         setupActionBarWithNavController(navController)
-        viewModel.setUpDatabase()
+//        viewModel.setUpDatabase()
     }
 
     override fun onSupportNavigateUp(): Boolean {
