@@ -6,6 +6,7 @@
         android:id="@+id/action_save_task"
         android:icon="@drawable/ic_save"
         android:title="@string/action_save_task"
+        android:contentDescription="@string/action_save_task"
         app:showAsAction="always" />
 
 </menu>
