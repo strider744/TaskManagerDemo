@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -52,10 +53,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             setUpItemTouchHelper(taskAdapter, rvTasks)
 
             btnAdd.setOnClickListener {
+                val navOptions = NavOptions.Builder().setLaunchSingleTop(true).build()
                 findNavController().navigate(
                     HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(
                         getString(R.string.task_title_text), null
-                    )
+                    ), navOptions
                 )
             }
         }
@@ -126,7 +128,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             override fun onItemClick(item: Task) {
                 val action =
                     HomeFragmentDirections.actionHomeFragmentToTaskDetailsFragment(item.name, item)
-                findNavController().navigate(action)
+                val navOptions = NavOptions.Builder().setLaunchSingleTop(true).build()
+                findNavController().navigate(action, navOptions)
             }
 
             override fun onCheckBoxClick(item: Task, isChecked: Boolean) {

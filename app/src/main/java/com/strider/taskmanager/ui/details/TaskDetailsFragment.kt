@@ -9,7 +9,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import autodispose2.androidx.lifecycle.scope
@@ -19,10 +18,15 @@ import com.strider.taskmanager.R
 import com.strider.taskmanager.databinding.FragmentTaskDetailsBinding
 import com.strider.taskmanager.enums.Priority
 import com.strider.taskmanager.enums.Status
+import com.strider.taskmanager.ui.MainActivity
+import com.strider.taskmanager.ui.OnBackPressedListener
+import com.strider.taskmanager.utils.observeNotNull
 import com.strider.taskmanager.utils.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import splitties.init.appCtx
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
 
@@ -39,6 +43,13 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
 
         setData()
         setHasOptionsMenu(true)
+
+        (activity as MainActivity).setOnBackPressedListener(object :OnBackPressedListener {
+            override fun onBackPressed() {
+                saveTask()
+            }
+        })
+
     }
 
     private fun setData() {
@@ -136,10 +147,9 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
     }
 
     private fun saveTask() {
-        val navOptions = NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
         if (args.task == viewModel.currentTask || viewModel.currentTask.name.isBlank()) {
             findNavController().navigate(
-                TaskDetailsFragmentDirections.actionSave(false), navOptions
+                TaskDetailsFragmentDirections.actionSave(false)
             )
         } else {
             viewModel.currentTask = viewModel.currentTask.copy(
@@ -147,7 +157,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
             )
             viewModel.saveTask()
             findNavController().navigate(
-                TaskDetailsFragmentDirections.actionSave(true), navOptions
+                TaskDetailsFragmentDirections.actionSave(true)
             )
         }
     }
