@@ -1,13 +1,12 @@
-package com.strider.taskmanager
+package com.strider.taskmanager.base
 
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.strider.taskmanager.R
 import com.strider.taskmanager.ui.MainActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -20,7 +19,7 @@ import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-class T13SwipeRightToDeleteTaskTest {
+class T10CreateTaskTest {
 
     @get:Rule
     var activityRule: ActivityScenarioRule<MainActivity> =
@@ -35,18 +34,11 @@ class T13SwipeRightToDeleteTaskTest {
         taskDescription = Random.nextLong().toString() + Random.nextLong().toString()
     }
 
-    // сохранение задачи после нажатия системной кнопки назад
+    // создаем задачу и проверяем её отображение
     @Test
-    fun t13SwipeRightToDeleteTaskTest() {
+    fun t10CreateTaskTest() {
         createTask()
         saveAndCheckCreatedTaskTest()
-
-        onView(withText(taskName)).perform(swipeRight())
-        Thread.sleep(2000)
-        onView(withText(taskName)).check(doesNotExist())
-        onView(withText(R.string.undo_upper_text)).check(matches(isDisplayed())).perform(click())
-        Thread.sleep(500)
-        onView(withText(taskName)).check(matches(isDisplayed()))
     }
 
     // создание задачи

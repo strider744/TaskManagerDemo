@@ -10,12 +10,6 @@
         android:name="com.strider.taskmanager.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
-        <argument
-            android:name="action"
-            app:argType="boolean"
-            app:nullable="false"
-            app:launchSingleTop="true"
-            android:defaultValue="false"/>
         <action
             android:id="@+id/action_homeFragment_to_taskDetailsFragment"
             app:destination="@id/taskDetailsFragment" />
@@ -25,9 +19,6 @@
         android:name="com.strider.taskmanager.ui.details.TaskDetailsFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_task_details">
-        <action
-            android:id="@+id/action_save"
-            app:destination="@id/homeFragment"/>
         <argument
             android:name="title"
             app:argType="string"

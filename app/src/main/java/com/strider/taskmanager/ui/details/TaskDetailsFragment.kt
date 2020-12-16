@@ -40,7 +40,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         binding = FragmentTaskDetailsBinding.bind(view)
         args.task?.let { viewModel.currentTask = it }
 
-
         setData()
         setHasOptionsMenu(true)
 
@@ -148,17 +147,14 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
 
     private fun saveTask() {
         if (args.task == viewModel.currentTask || viewModel.currentTask.name.isBlank()) {
-            findNavController().navigate(
-                TaskDetailsFragmentDirections.actionSave(false)
-            )
+            findNavController().popBackStack()
         } else {
             viewModel.currentTask = viewModel.currentTask.copy(
                 lastChange = System.currentTimeMillis(),
             )
             viewModel.saveTask()
-            findNavController().navigate(
-                TaskDetailsFragmentDirections.actionSave(true)
-            )
+            (activity as MainActivity).setActionSave()
+            findNavController().popBackStack()
         }
     }
 }

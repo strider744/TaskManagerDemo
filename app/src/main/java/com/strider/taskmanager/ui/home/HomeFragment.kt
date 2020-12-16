@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,8 +31,7 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private val viewModel: MainViewModel by viewModels()
-    private val args: HomeFragmentArgs by navArgs()
+    private val viewModel: MainViewModel by activityViewModels()
     private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,13 +59,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 )
             }
         }
-
-        if (args.action) {
+        if (viewModel.isTaskSaved) {
             Snackbar.make(
                 requireView(),
                 getString(R.string.task_saved_message),
                 1000
             ).show()
+            viewModel.isTaskSaved = false
         }
 
         setHasOptionsMenu(true)

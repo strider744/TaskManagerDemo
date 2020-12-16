@@ -23,6 +23,7 @@ class MainViewModel @ViewModelInject constructor(
     val events = eventChannel.receiveAsFlow()
 
     val searchQuery = MutableLiveData("")
+    var isTaskSaved = false
 
     val tasksFlow =
         combine(
